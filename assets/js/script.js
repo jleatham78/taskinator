@@ -283,6 +283,25 @@ var saveTasks = function() {
     localStorage.setItem("tasks", JSON.stringify(tasks));
 }
 
+//get tasks from local storage
+//convert tasks from string format back into array of objects
+//iterate through a task array and create task elements on the page
+var loadTasks = function() {
+     var savedTasks = localStorage.getItem("tasks");
+
+     if (!savedTasks) {
+        return false;
+     }
+     
+     savedTasks = JSON.parse(savedTasks);
+     
+     for (var i = 0; i < savedTasks.length; i++) {
+         //pass esach task object into the createtaskEl function
+         createTaskEl(savedTasks[i]);
+     }
+
+}
+
 formEl.addEventListener("submit", taskFormHandler);
 
 pageContentEl.addEventListener("click", taskButtonHandler);
@@ -296,3 +315,5 @@ pageContentEl.addEventListener("dragover", dropZoneHandler);
 pageContentEl.addEventListener("drop", dropTaskHandler);
 
 pageContentEl.addEventListener("dragleave", dragLeaveHandler);
+
+loadTasks();
